@@ -121,7 +121,7 @@ namespace AspNetCore.PluginManager
 
                 // load any pre loaded plugins from UsePlugin
                 foreach (Type pluginType in _preinitialisedPlugins)
-                    GetPluginManager().LoadPlugin(pluginType.Assembly.Location, false);
+                    GetPluginManager().LoadPlugin(pluginType.Assembly.Location, false, true);
 
                 _preinitialisedPlugins = null;
 
@@ -147,11 +147,8 @@ namespace AspNetCore.PluginManager
                                 continue;
                             }
                         }
-#if NET_CORE_3_0
-                        _logger.AddToLog(LogLevel.PluginConfigureError, $"Unable to load {pluginFile} dynamically, use UsePlugin() method instead.");
-#else
-                        _pluginManagerInstance.LoadPlugin(pluginFile, _pluginConfiguration.CreateLocalCopy);
-#endif
+
+                        _pluginManagerInstance.LoadPlugin(pluginFile, _pluginConfiguration.CreateLocalCopy, true);
                     }
                 }
 
@@ -168,7 +165,7 @@ namespace AspNetCore.PluginManager
                         if (String.IsNullOrEmpty(file) || !File.Exists(file))
                             continue;
 
-                        _pluginManagerInstance.LoadPlugin(file, _pluginConfiguration.CreateLocalCopy);
+                        _pluginManagerInstance.LoadPlugin(file, _pluginConfiguration.CreateLocalCopy, true);
                     }
                 }
             }
@@ -281,7 +278,7 @@ namespace AspNetCore.PluginManager
             if (iPluginType.GetInterface(typeof(IPlugin).Name) != null)
             {
                 if (_preinitialisedPlugins == null)
-                    GetPluginManager().LoadPlugin(iPluginType.Assembly.Location, false);
+                    GetPluginManager().LoadPlugin(iPluginType.Assembly.Location, false, true);
                 else
                     _preinitialisedPlugins.Add(iPluginType);
             }
@@ -399,9 +396,9 @@ namespace AspNetCore.PluginManager
 
         private static string GetPluginPath()
         {
-#if NET_CORE_3_0
+#if NET_CORE_3X
             return String.Empty;
-#endif
+#else
             // is the path overridden in config
             if (!String.IsNullOrWhiteSpace(_pluginConfiguration.PluginPath) &&
                 Directory.Exists(_pluginConfiguration.PluginPath))
@@ -410,6 +407,7 @@ namespace AspNetCore.PluginManager
             }
 
             return AddTrailingBackSlash(_rootPath) + "Plugins\\";
+#endif
         }
 
         #endregion Private Static Methods

@@ -56,12 +56,12 @@ namespace AspNetCore.PluginManager.DemoWebsite
                 PluginManagerService.UsePlugin(typeof(UserAccount.Plugin.PluginInitialisation));
                 PluginManagerService.UsePlugin(typeof(LoginPlugin.PluginInitialisation));
                 PluginManagerService.UsePlugin(typeof(Sitemap.Plugin.PluginInitialisation));
-                PluginManagerService.UsePlugin(typeof(SystemAdmin.Plugin.PluginInitialisation));
+                //PluginManagerService.UsePlugin(typeof(SystemAdmin.Plugin.PluginInitialisation));
                 PluginManagerService.UsePlugin(typeof(DownloadPlugin.PluginInitialisation));
                 PluginManagerService.UsePlugin(typeof(Company.Plugin.PluginInitialisation));
                 PluginManagerService.UsePlugin(typeof(Blog.Plugin.PluginInitialisation));
-                PluginManagerService.UsePlugin(typeof(DemoWebsitePlugin.Plugin.PluginInitialisation));
-                PluginManagerService.UsePlugin(typeof(DemoApiPlugin.PluginInitialisation));
+                //PluginManagerService.UsePlugin(typeof(DemoWebsitePlugin.Plugin.PluginInitialisation));
+                //PluginManagerService.UsePlugin(typeof(DemoApiPlugin.PluginInitialisation));
 
                 CreateWebHostBuilder(args).Build().Run();
             }

@@ -57,7 +57,7 @@ namespace AspNetCore.PluginManager
             ConfigureCompiledViews(mvcBuilder);
 #endif
 
-#if NET_CORE_3_0
+#if NET_CORE_3X
             AddApplicationParts(mvcBuilder);
 #endif
 
@@ -71,7 +71,7 @@ namespace AspNetCore.PluginManager
 
         #region Private Static Methods
 
-#if NET_CORE_3_0
+#if NET_CORE_3X
         private static void AddApplicationParts(in IMvcBuilder mvcBuilder)
         {
             foreach (KeyValuePair<string, IPluginModule> plugin in PluginManagerService.GetPluginManager().GetLoadedPlugins())

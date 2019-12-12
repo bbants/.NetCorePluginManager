@@ -48,6 +48,10 @@
     <EmbeddedResource Include="wwwroot\images\PluginTechnology.png" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <PackageReference Include="AspNetCore.PluginManager" Version="3.0.1" />
     <PackageReference Include="BadEgg.Plugin" Version="3.0.1" />

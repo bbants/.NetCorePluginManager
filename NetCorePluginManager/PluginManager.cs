@@ -192,7 +192,8 @@ namespace AspNetCore.PluginManager
         /// </summary>
         /// <param name="pluginName">Filename of plugin to be loaded.</param>
         /// <param name="copyLocal">If true, copies the plugin to a local temp area to load from.</param>
-        internal void LoadPlugin(in string pluginName, in bool copyLocal)
+        /// <param name="loadViewAssembly">Determines whether associated view assemblies will also be loaded, if found.</param>
+        internal void LoadPlugin(in string pluginName, in bool copyLocal, in bool loadViewAssembly)
         {
             try
             {
@@ -203,6 +204,15 @@ namespace AspNetCore.PluginManager
                 if (setting != null && !setting.Disabled)
                 {
                     LoadPlugin(LoadAssembly(pluginFile), pluginFile, true);
+#if NET_CORE_3X
+                    if (loadViewAssembly)
+                    {
+                        pluginFile = Path.ChangeExtension(pluginFile, "Views.dll");
+
+                        if (File.Exists(pluginFile))
+                            LoadPlugin(pluginFile, copyLocal, false);
+                    }
+#endif
                 }
             }
             catch (Exception error)
@@ -481,9 +491,9 @@ namespace AspNetCore.PluginManager
             _serviceProvider = services.BuildServiceProvider();
         }
 
-        #endregion Internal Methods
+#endregion Internal Methods
 
-        #region IDisposable Methods
+#region IDisposable Methods
 
         /// <summary>
         /// Disposable method, notify all plugins to finalise
@@ -508,9 +518,9 @@ namespace AspNetCore.PluginManager
             }
         }
 
-        #endregion IDisposable Methods
+#endregion IDisposable Methods
 
-        #region Private Methods
+#region Private Methods
 
         /// <summary>
         /// Copies the plugin file to a local temp area, that will be used to load the plugin from.
@@ -749,6 +759,6 @@ namespace AspNetCore.PluginManager
             return new PluginSetting(pluginName);
         }
 
-        #endregion Private Methods
+#endregion Private Methods
     }
 }

@@ -193,16 +193,17 @@
             <summary>
             Loads and configures an individual plugin
             </summary>
-            <param name="assembly"></param>
-            <param name="fileLocation"></param>
+            <param name="assembly">Assembly being loaded.</param>
+            <param name="fileLocation">Location of assembly on physical disk.</param>
             <param name="extractResources">Determines whether resources are extracted from the plugin module or not.</param>
         </member>
-        <member name="M:AspNetCore.PluginManager.PluginManager.LoadPlugin(System.String@,System.Boolean@)">
+        <member name="M:AspNetCore.PluginManager.PluginManager.LoadPlugin(System.String@,System.Boolean@,System.Boolean@)">
             <summary>
             Loads and configures an individual plugin
             </summary>
             <param name="pluginName">Filename of plugin to be loaded.</param>
             <param name="copyLocal">If true, copies the plugin to a local temp area to load from.</param>
+            <param name="loadViewAssembly">Determines whether associated view assemblies will also be loaded, if found.</param>
         </member>
         <member name="M:AspNetCore.PluginManager.PluginManager.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder@)">
             <summary>
